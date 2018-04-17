@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -23,12 +23,12 @@
     <link href="admin_asset/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- DataTables CSS -->
-    <link href="admin_asset/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="admin_asset/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"
+          rel="stylesheet">
 
     <!-- DataTables Responsive CSS -->
     <link href="admin_asset/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
 </head>
-
 <body>
 
 <div id="wrapper">
@@ -60,7 +60,7 @@
 <script src="admin_asset/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<script>
+<script type="text/javascript">
     $(document).ready(function() {
         $('#dataTables-example').DataTable({
             responsive: true
@@ -68,7 +68,6 @@
     });
 </script>
 
-@yield('scripts');
+@yield('scripts')
 </body>
-
 </html>

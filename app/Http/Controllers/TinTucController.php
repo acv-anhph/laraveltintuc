@@ -21,7 +21,8 @@ class TinTucController extends Controller
         return view('admin.tintuc.list')->with(
             array(
                 'tintuc' => $tintuc
-            ));
+            )
+        );
     }
 
     /**
@@ -31,7 +32,14 @@ class TinTucController extends Controller
      */
     public function create()
     {
-        //
+        $theloai = TheLoai::all();
+        $loaitin = LoaiTin::all();
+        return view('admin.tintuc.create')->with(
+            array(
+                'theloai' => $theloai,
+                'loaitin' => $loaitin
+            )
+        );
     }
 
     /**

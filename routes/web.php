@@ -22,4 +22,8 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::resource('tintuc', 'TinTucController');
     Route::resource('slide', 'SlideController');
     Route::resource('user', 'UserController');
+
+    Route::group(array('prefix' => 'ajax'), function () {
+        Route::get('/loaitin/{idTheLoai}', 'AjaxController@getLoaiTin');
+    });
 });
