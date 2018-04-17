@@ -14,30 +14,48 @@
                     <thead>
                     <tr align="center">
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>Category Parent</th>
-                        <th>Status</th>
-                        <th>Delete</th>
-                        <th>Edit</th>
+                        <th>Tiêu đề</th>
+                        <th>Tóm tắt</th>
+                        <th>Thể loại</th>
+                        <th>Loại tin</th>
+                        <th>Xem</th>
+                        <th>Nổi bật</th>
+                        <th>Action</th>
+
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="odd gradeX" align="center">
-                        <td>1</td>
-                        <td>Tin Tức</td>
-                        <td>None</td>
-                        <td>Hiện</td>
-                        <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>
-                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
-                    </tr>
-                    <tr class="even gradeC" align="center">
-                        <td>2</td>
-                        <td>Bóng Đá</td>
-                        <td>Thể Thao</td>
-                        <td>Ẩn</td>
-                        <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>
-                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
-                    </tr>
+                    @foreach($tintuc as $tt)
+                        <tr class="even gradeC" align="center">
+                            <td>{{$tt->id}}</td>
+                            <td>
+                                {{$tt->TieuDe}}
+                                <img src="/uploads/tintuc/{{$tt->Hinh}}" alt="" class="img-responsive" width="130" height="100">
+                            </td>
+                            <td>{{$tt->TomTat}}</td>
+                            <td>{{$tt->loaitin->theloai->Ten}}</td>
+                            <td>{{$tt->loaitin->Ten}}</td>
+                            <td>{{$tt->SoLuotXem}}</td>
+                            <td>{{$tt->NoiBat}}</td>
+                            <td class="center"><a href="{{route('tintuc.edit', $tt->id)}}"><i
+                                            class="fa fa-trash-o fa-fw"></i>Edit</a>
+                                &nbsp|
+
+                                {!! Form::open(array('route' => array('tintuc.destroy', $tt->id), 'method' => 'delete', 'style' => 'display:inline-block')) !!}
+                                <button type="submit" style="background:none!important;
+                                                             color:inherit;
+                                                             border:none;
+                                                             padding:0!important;
+                                                             font: inherit;
+                                                             cursor: pointer;
+                                                             :hover:
+                                                             ">
+                                    <i class="fa fa-pencil fa-fw"></i>Delete
+                                </button>
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

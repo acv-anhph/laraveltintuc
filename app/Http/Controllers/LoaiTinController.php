@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\LoaiTin;
 use App\Models\TheLoai;
+use Illuminate\Validation\Rule;
 
-class TheLoaiController extends Controller
+class LoaiTinController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +16,9 @@ class TheLoaiController extends Controller
      */
     public function index()
     {
-        $theloai = TheLoai::all();
-        return view('admin.theloai.list', array(
-            'theloai' => $theloai,
+        $loaitin = LoaiTin::all();
+        return view('admin.loaitin.list', array(
+            'loaitin' => $loaitin,
         ));
     }
 
@@ -27,9 +29,15 @@ class TheLoaiController extends Controller
      */
     public function create()
     {
-        $theloai = TheLoai::all();
-        return view('admin.theloai.create', array(
-            'theloai' => $theloai,
+        $theloai = TheLoai::all('id', 'Ten');
+        $option = $theloai->toArray();
+        $result = array();
+        foreach ($option as $value) {
+            $result[$value['id']] = $value['Ten'];
+        }
+
+        return view('admin.loaitin.create', array(
+            'theloai' => $result
         ));
     }
 
@@ -43,20 +51,23 @@ class TheLoaiController extends Controller
     {
         $this->validate($request,
             array(
-                'Ten' => 'required|min:3|max:100'
+                'Ten' => 'required|min:3|max:100',
+                'TheLoai' => 'required'
             ), array(
-                'Ten.required' => 'Ban chua nhap ten the loai',
+                'Ten.required' => 'Ban chua nhap ten loai tin',
                 'Ten.min' => '3 -> 100 ki tu',
-                'Ten.max' => '3 -> 100 li tu'
+                'Ten.max' => '3 -> 100 li tu',
+                'TheLoai.required' => 'phai chon the loai'
             )
         );
 
-        $theloai = new TheLoai();
-        $theloai->Ten = $request->Ten;
-        $theloai->TenKhongDau = changeTitle($request->Ten);
-        $theloai->save();
+        $loaitin = new LoaiTin();
+        $loaitin->Ten = $request->Ten;
+        $loaitin->idTheLoai = $request->TheLoai;
+        $loaitin->TenKhongDau = changeTitle($request->Ten);
+        $loaitin->save();
 
-        return back()->with('thongbao', 'them thanh cong');
+        return back()->with('thongbao', 'tao moi thanh cong');
     }
 
     /**
@@ -78,9 +89,13 @@ class TheLoaiController extends Controller
      */
     public function edit($id)
     {
-        $theloai = TheLoai::find($id);
+        $loaitin = LoaiTin::find($id);
+        $theloai = TheLoai::all('id', 'Ten');
 
-        return view('admin.theloai.edit')->with('theloai', $theloai);
+        return view('admin.loaitin.edit')->with(array(
+            'loaitin' => $loaitin,
+            'theloai' => $theloai
+        ));
     }
 
     /**
@@ -92,23 +107,33 @@ class TheLoaiController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $loaitin = LoaiTin::find($id);
+
         $this->validate(
             $request,
             array(
-                'Ten' => 'required|unique:TheLoai,Ten|min:3|max:100'
+                'Ten' => [
+                    'required',
+                    'min:3',
+                    'max: 100',
+                    Rule::unique('loaitin', 'Ten')->ignore($loaitin->id)
+                ],
+//                'Ten' => 'unique:loaitin,Ten,'.$loaitin->id.',id',
+                'TheLoai' => 'required'
             ),
             array(
                 'Ten.required' => 'Ban chua nhap ten the loai',
                 'Ten.min' => '3 -> 100 ki tu',
                 'Ten.max' => '3 -> 100 li tu',
-                'Ten.unique' => 'ten da ton tai'
+                'Ten.unique' => 'ten da ton tai',
+                'TheLoai.required' => 'phai chon the loai'
             )
         );
 
-        $theloai = TheLoai::find($id);
-        $theloai->Ten = $request->Ten;
-        $theloai->TenKhongDau = changeTitle($request->Ten);
-        $theloai->save();
+        $loaitin->Ten = $request->Ten;
+        $loaitin->idTheLoai = $request->TheLoai;
+        $loaitin->TenKhongDau = changeTitle($request->Ten);
+        $loaitin->save();
 
         return back()->with('thongbao', 'sua thanh cong');
     }
@@ -121,8 +146,8 @@ class TheLoaiController extends Controller
      */
     public function destroy($id)
     {
-        $product = TheLoai::find($id);
-        $product->delete();
+        $loaitin = LoaiTin::find($id);
+        $loaitin->delete();
 
         return back()->with('message', 'Xóa sản phẩm thành công');
     }

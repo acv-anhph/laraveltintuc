@@ -4,40 +4,49 @@
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Category
+                <div class="col-lg-12 clearfix">
+                    <h1 class="page-header">Thể loại
                         <small>List</small>
                     </h1>
                 </div>
                 <!-- /.col-lg-12 -->
+                @if(session('message'))
+                    <div class="alert alert-success clearfix" role="alert">{{ session('message') }}</div>
+                @endif
                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                     <thead>
                     <tr align="center">
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Category Parent</th>
-                        <th>Status</th>
-                        <th>Delete</th>
-                        <th>Edit</th>
+                        <th>Tên không dấu</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="odd gradeX" align="center">
-                        <td>1</td>
-                        <td>Tin Tức</td>
-                        <td>None</td>
-                        <td>Hiện</td>
-                        <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>
-                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
-                    </tr>
-                    <tr class="even gradeC" align="center">
-                        <td>2</td>
-                        <td>Bóng Đá</td>
-                        <td>Thể Thao</td>
-                        <td>Ẩn</td>
-                        <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>
-                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
-                    </tr>
+                    @foreach($theloai as $tl)
+                        <tr class="odd gradeX" align="center">
+                            <td>{{$tl->id}}</td>
+                            <td>{{$tl->Ten}}</td>
+                            <td>{{$tl->TenKhongDau}}</td>
+                            <td class="center">
+                                <a href="{{route('theloai.edit', $tl->id)}}"><i class="fa fa-trash-o fa-fw"></i>Edit</a>
+                                &nbsp|
+
+                                {!! Form::open(array('route' => array('theloai.destroy', $tl->id), 'method' => 'delete', 'style' => 'display:inline-block')) !!}
+                                <button type="submit" style="background:none!important;
+                                                             color:inherit;
+                                                             border:none;
+                                                             padding:0!important;
+                                                             font: inherit;
+                                                             cursor: pointer;
+                                                             :hover:
+                                                             ">
+                                    <i class="fa fa-pencil fa-fw"></i>Delete
+                                </button>
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

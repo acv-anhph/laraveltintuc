@@ -16,37 +16,62 @@
                 <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Category<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Thể loại<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">List Category</a>
+                        <a href="{{ route('theloai.index') }}">List Thể loại</a>
                     </li>
                     <li>
-                        <a href="#">Add Category</a>
+                        <a href="{{ route('theloai.create') }}">Add Thể loại</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="#"><i class="fa fa-cube fa-fw"></i> Product<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-cube fa-fw"></i>Loại Tin<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">List Product</a>
+                        <a href="{{ route('loaitin.index') }}">List Loại Tin</a>
                     </li>
                     <li>
-                        <a href="#">Add Product</a>
+                        <a href="{{ route('loaitin.create') }}">Add Loại Tin</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="#"><i class="fa fa-users fa-fw"></i> User<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-cube fa-fw"></i>Tin tức<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">List User</a>
+                        <a href="{{ route('tintuc.index') }}">List tin tức</a>
                     </li>
                     <li>
-                        <a href="#">Add User</a>
+                        <a href="{{ route('tintuc.create') }}">Add tin tức</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-cube fa-fw"></i>Slide<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="{{ route('slide.index') }}">List Slide</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('slide.create') }}">Add Slide</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+
+            <li>
+                <a href="#"><i class="fa fa-users fa-fw"></i>User<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="{{ route('user.index') }}">List User</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('user.index') }}">Add User</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
