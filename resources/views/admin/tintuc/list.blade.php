@@ -2,6 +2,11 @@
 
 @section('content')
     <div id="page-wrapper">
+        @if(session('thongbao'))
+            <div class="alert alert-success">
+                {{session('message')}}
+            </div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
@@ -11,6 +16,7 @@
                 </div>
                 <!-- /.col-lg-12 -->
                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
                     <thead>
                     <tr align="center">
                         <th>ID</th>

@@ -12,8 +12,8 @@
 */
 use \Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/test', function () {
+    return App\Models\AdminMenuCategory::with('allChildren')->where('parent_id', 0)->get()->toArray();
 });
 
 Route::group(array('prefix' => 'admin'), function () {

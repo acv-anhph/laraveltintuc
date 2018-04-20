@@ -34,10 +34,10 @@
 <div id="wrapper">
 
     <!-- Navigation -->
-    @include('admin.layouts.header');
+    @include('admin.layouts.header')
 
     <!-- Page Content -->
-    @yield('content');
+    @yield('content')
     <!-- /#page-wrapper -->
 
 </div>
@@ -58,6 +58,7 @@
 <!-- DataTables JavaScript -->
 <script src="admin_asset/bower_components/DataTables/media/js/jquery.dataTables.min.js"></script>
 <script src="admin_asset/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript" src="admin_asset/ckeditor/ckeditor.js" ></script>
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script type="text/javascript">

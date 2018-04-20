@@ -16,7 +16,7 @@ class TinTucController extends Controller
      */
     public function index()
     {
-        $tintuc = TinTuc::all()->take(20);
+        $tintuc = TinTuc::orderBy('id', 'desc')->take(20)->get();
 
         return view('admin.tintuc.list')->with(
             array(
@@ -50,7 +50,43 @@ class TinTucController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            $request,
+            array(
+                'TieuDe' => 'required|min:3|max:100|unique:tintuc,TieuDe',
+                'TomTat' => 'required',
+                'NoiDung' => 'required'
+
+            ),
+            array(
+                'TieuDe.required' => 'Ban chua nhap ten tieu de',
+                'TomTat.required' => 'Ban chua nhap tom tat',
+                'NoiDung.required' => 'Ban chua nhap noi dung',
+                'TieuDe.min' => '3 -> 100 ki tu',
+                'TieuDe.max' => '3 -> 100 li tu',
+                'TieuDe.unique' => 'tieu de da ton tai'
+            )
+        );
+
+        $tintuc = new TinTuc();
+        $tintuc->TieuDe = $request->TieuDe;
+        $tintuc->TieuDeKhongDau = changeTitle($request->TieuDe);
+        $tintuc->idLoaiTin = $request->LoaiTin;
+        $tintuc->TomTat = $request->TomTat;
+        $tintuc->NoiDung = $request->NoiDung;
+
+        if ($request->hasFile('Hinh')) {
+            $file = $request->file('Hinh');
+            $name = $file->getClientOriginalName();
+            $tintuc->Hinh = time() . '_' . $name;
+            $file->move('uploads/tintuc', $tintuc->Hinh);
+        } else {
+            $tintuc->Hinh = '';
+        }
+
+        $tintuc->save();
+
+        return back()->with('thongbao', 'tao moi thanh cong');
     }
 
     /**
@@ -72,7 +108,15 @@ class TinTucController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tintuc = TinTuc::find($id);
+        $theloai = TheLoai::all('id', 'Ten');
+        $loaitin = $tintuc->loaitin->theloai->loaitin;
+
+        return view('admin.tintuc.edit')->with(array(
+            'tintuc' => $tintuc,
+            'theloai' => $theloai,
+            'loaitin' => $loaitin
+        ));
     }
 
     /**
@@ -84,7 +128,44 @@ class TinTucController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tintuc = TinTuc::find($id);
+
+        $this->validate(
+            $request,
+            array(
+                'TieuDe' => 'required|min:3|max:100|unique:tintuc,TieuDe,' . $id,
+                'TomTat' => 'required',
+                'NoiDung' => 'required'
+
+            ),
+            array(
+                'TieuDe.required' => 'Ban chua nhap ten tieu de',
+                'TomTat.required' => 'Ban chua nhap tom tat',
+                'NoiDung.required' => 'Ban chua nhap noi dung',
+                'TieuDe.min' => '3 -> 100 ki tu',
+                'TieuDe.max' => '3 -> 100 li tu',
+                'TieuDe.unique' => 'tieu de da ton tai'
+            )
+        );
+
+        $tintuc->TieuDe = $request->TieuDe;
+        $tintuc->TieuDeKhongDau = changeTitle($request->TieuDe);
+        $tintuc->idLoaiTin = $request->LoaiTin;
+        $tintuc->TomTat = $request->TomTat;
+        $tintuc->NoiDung = $request->NoiDung;
+
+        if ($request->hasFile('Hinh')) {
+            unlink('uploads/tintuc/' . $tintuc->Hinh);
+
+            $file = $request->file('Hinh');
+            $name = $file->getClientOriginalName();
+            $tintuc->Hinh = time() . '_' . $name;
+            $file->move('uploads/tintuc', $tintuc->Hinh);
+        }
+
+        $tintuc->save();
+
+        return back()->with('thongbao', 'sua thanh cong');
     }
 
     /**
@@ -95,6 +176,9 @@ class TinTucController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tintuc = TinTuc::find($id);
+        $tintuc->delete();
+
+        return back()->with('message', 'Xóa thành công');
     }
 }
