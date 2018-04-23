@@ -35,3 +35,8 @@ Route::get('/', function () {
 Route::get('/admin/login', 'UserController@getDangnhapAdmin')->name('admin.login');
 Route::post('/admin/login', 'UserController@postDangnhapAdmin');
 Route::get('/admin/logout', 'UserController@logout')->name('admin.logout');
+
+Route::get('trangchu', function () {
+   return view('pages.trangchu');
+});
+
