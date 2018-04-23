@@ -16,11 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $cats = AdminMenuCategory::all()->toArray();
 
-
-
-        View::share('cats', $cats);
     }
 
     /**

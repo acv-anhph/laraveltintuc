@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class UserController extends Controller
 {
@@ -56,7 +59,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        echo 'hahahahha';
     }
 
     /**
@@ -80,5 +83,41 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getDangnhapAdmin()
+    {
+        return view('admin.login');
+    }
+
+    public function postDangnhapAdmin(Request $request)
+    {
+        $this->validate(
+            $request,
+            array(
+                'email' => 'required',
+                'password' => 'required|min:3|max:32'
+            ),
+            array(
+                'email.required' => 'ban chua nhap email',
+                'password.required' => 'ban chua nhap password',
+                'password.min' => '3 - 32 ki tu',
+                'password.max' => '3 - 32 ki tu'
+            )
+        );
+
+        if (Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password')))) {
+            return redirect()->route('tintuc.index');
+        } else {
+            return back()->with('thongbao', 'dang nhap khong thanh cong');
+        }
+
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('user.login');
     }
 }
