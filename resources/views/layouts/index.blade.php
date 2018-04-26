@@ -11,6 +11,8 @@
 
     <title>@yield('title')</title>
 
+    <base href="{{asset('')}}">
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -18,9 +20,9 @@
     <link href="css/shop-homepage.css" rel="stylesheet">
     <link href="css/my.css" rel="stylesheet">
 
-    @yield('css')
+@yield('css')
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -33,7 +35,27 @@
 
 @include('layouts.header')
 
-@yield('content')
+<!-- Page Content -->
+<div class="container">
+
+    @include('layouts.slide')
+
+    <div class="space20"></div>
+
+    <div class="row main-left">
+
+        <!-- menu -->
+        @include('layouts.menu')
+        <!-- endmenu -->
+
+        <div class="col-md-9 ">
+        @yield('content')
+        </div>
+    </div>
+
+
+</div>
+<!-- end Page Content -->
 
 @include('layouts.footer')
 

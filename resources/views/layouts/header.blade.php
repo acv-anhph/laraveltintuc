@@ -3,7 +3,8 @@
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -22,34 +23,38 @@
                 </li>
             </ul>
 
-            <form class="navbar-form navbar-left" role="search">
+            <form action="timkiem" method="post" class="navbar-form navbar-left" role="search">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+                    <input type="text" class="form-control" placeholder="Search" name="tukhoa">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
 
             <ul class="nav navbar-nav pull-right">
-                <li>
-                    <a href="#">Đăng ký</a>
-                </li>
-                <li>
-                    <a href="#">Đăng nhập</a>
-                </li>
-                <li>
-                    <a>
-                        <span class ="glyphicon glyphicon-user"></span>
-                        Bùi Đức Phú
-                    </a>
-                </li>
+                @if($logedin_user)
+                    <li>
+                        <a>
+                            <span class="glyphicon glyphicon-user"></span>
+                            {{$logedin_user->name}}
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="#">Đăng xuất</a>
-                </li>
+                    <li>
+                        <a href="/dangxuat">Đăng xuất</a>
+                    </li>
+                @else
+                    <li>
+                        <a href="/dangki">Đăng ký</a>
+                    </li>
+                    <li>
+                        <a href="/dangnhap">Đăng nhập</a>
+                    </li>
+                @endif
+
 
             </ul>
         </div>
-
 
 
         <!-- /.navbar-collapse -->

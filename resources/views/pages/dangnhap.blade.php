@@ -1,0 +1,53 @@
+@extends('layouts.index')
+
+@section('title')
+    dang nhap
+@endsection
+
+@section('content')
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if(session('thongbao'))
+        <div class="alert alert-danger">
+            {{session('thongbao')}}
+        </div>
+    @endif
+
+    <div class="row carousel-holder">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Đăng nhập</div>
+                <div class="panel-body">
+                    <form action="" method="post">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        <div>
+                            <label>Email</label>
+                            <input type="email" class="form-control" placeholder="Email" name="email"
+                            >
+                        </div>
+                        <br>
+                        <div>
+                            <label>Mật khẩu</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-default">Đăng nhập
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+@endsection
